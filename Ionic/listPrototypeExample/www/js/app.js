@@ -5,6 +5,12 @@
 // the 2nd parameter is an array of 'requires'
 angular.module('starter', ['ionic'])
 
+.config(['$httpProvider', function($httpProvider) {
+    $httpProvider.defaults.useXDomain = true;
+    // $httpProvider.defaults.withCredentials = true;
+    delete $httpProvider.defaults.headers.common['X-Requested-With'];
+  }])
+
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
     if(window.cordova && window.cordova.plugins.Keyboard) {
@@ -21,4 +27,27 @@ angular.module('starter', ['ionic'])
       StatusBar.styleDefault();
     }
   });
+})
+
+.controller('ListCtrl', function($scope, $http){
+  var vm = this;
+
+  var URL = "http://javatechig.com/?json=get_recent_posts&count=45";
+
+  vm.items = {};
+
+  $http({
+    method: 'GET',
+    url: URL
+  }).then(function successCallback(response) {
+      // this callback will be called asynchronously
+      // when the response is available
+      vm.items = response.data.posts;
+      console.log(vm.items);
+  }, function errorCallback(response) {
+    // called asynchronously if an error occurs
+    // or server returns response with an error status.
+    console.log(response);
+  });
+
 })
