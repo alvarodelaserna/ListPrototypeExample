@@ -31,7 +31,6 @@ angular.module('starter', ['ionic'])
 
 .controller('ListCtrl', function($scope, $http){
   var vm = this;
-
   var URL = "http://javatechig.com/?json=get_recent_posts&count=45";
 
   vm.items = {};
@@ -40,13 +39,12 @@ angular.module('starter', ['ionic'])
     method: 'GET',
     url: URL
   }).then(function successCallback(response) {
-      // this callback will be called asynchronously
-      // when the response is available
-      vm.items = response.data.posts;
-      console.log(vm.items);
+    // este callback se llamará de forma asíncrona
+    // cuando la respuesta esté disponible
+    vm.items = response.data.posts;
   }, function errorCallback(response) {
-    // called asynchronously if an error occurs
-    // or server returns response with an error status.
+    // se llama de forma asíncrona al ocurrir un error
+    // o cuando el servidor responde con un código de error
     console.log(response);
   });
 
